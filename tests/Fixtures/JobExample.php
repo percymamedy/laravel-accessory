@@ -4,7 +4,6 @@ namespace Accessory\Tests\Fixtures;
 
 use Accessory\Support\Makable;
 
-
 class JobExample
 {
     use Makable;

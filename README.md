@@ -120,7 +120,7 @@ Good use for the ```Makable``` trait is within ```Jobs```, ```Mailables```, ```E
 
 #### ```Dispatchable```
 
-The ```Dispatchable`` trait extends the ```Illuminate\Foundation\Bus\Dispatchable``` but adds a ```static dispatchNow()``` method which  allows you to dispatch ```Jobs``` to its appropriate handler in the current process.
+The ```Dispatchable``` trait extends the ```Illuminate\Foundation\Bus\Dispatchable``` but adds a ```static dispatchNow()``` method which  allows you to dispatch ```Jobs``` to its appropriate handler in the current process.
 
 Consider the following Job class with the ```Dispatchable``` trait applied to it :
 

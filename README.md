@@ -194,3 +194,63 @@ class PodcastController extends Controller
     }
 }
 ```
+
+The ```Dispatchable``` trait also adds a ```when()``` method which will allow you to dispatch Jobs depending on the condition passed to this method.
+
+You may now dispatch the Job depending on the condition passed to the ```when()``` method.
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Jobs\ProcessPodcast;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class PodcastController extends Controller
+{
+    /**
+     * Store a new podcast.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        // Create podcast...
+
+        ProcessPodcast::when($request->has('process_podcast'))->dispatch($podcast);
+    }
+}
+```
+
+You can also pass a closure to the ```when()``` method. The closure should return a boolean either which will in turn decide if the Job should be dispatched or not.
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Jobs\ProcessPodcast;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class PodcastController extends Controller
+{
+    /**
+     * Store a new podcast.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        // Create podcast...
+
+        ProcessPodcast::when(function() use($request) {
+            return $request->has('process_podcast') && $request->process_podcast === 1;
+        })->dispatch($podcast);
+    }
+}
+```

@@ -25,8 +25,10 @@ class RegulatorTest extends TestCase
 
         $this->app->instance('App\AudioProcessor', $audioProcessor);
 
-        $result = ProcessPodcast::when(true)->dispatchNow($podcast);
+        $result1 = ProcessPodcast::when(true)->dispatchNow($podcast);
+        $this->assertTrue($result1);
 
-        $this->assertTrue($result);
+        $result2 = ProcessPodcast::when(false)->dispatchNow($podcast);
+        $this->assertNull($result2);
     }
 }

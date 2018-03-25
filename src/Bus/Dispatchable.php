@@ -2,9 +2,9 @@
 
 namespace Accessory\Bus;
 
+use Accessory\Support\Regulator;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Foundation\Bus\Dispatchable as BaseDispatchable;
-use Accessory\Support\Regulator;
 
 trait Dispatchable
 {

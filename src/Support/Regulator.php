@@ -10,7 +10,7 @@ class Regulator
      * The subject of that the regulator
      * controls.
      *
-     * @var string
+     * @var mixed
      */
     protected $subject;
 
@@ -26,7 +26,7 @@ class Regulator
     /**
      * Create and return a new instance of the Regulator.
      *
-     * @param string  $subject
+     * @param mixed   $subject
      * @param boolean $determinant
      */
     public function __construct($subject = null, $determinant = false)
@@ -38,7 +38,7 @@ class Regulator
     /**
      * Sets the subject to the regulator.
      *
-     * @param string $subject
+     * @param mixed $subject
      *
      * @return self
      */
@@ -76,15 +76,32 @@ class Regulator
     }
 
     /**
-     * Undocumented function
+     * Delegates method to underlying subject.
      *
      * @param string $name
      * @param mixed  $arguments
      *
-     * @return void
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
     public function __call($name, $arguments)
     {
-        
+        // Regulator is not approved.
+        if (!$this->determinant) {
+            return null;
+        }
+
+        // Subject is an Object.
+        if (is_object($this->subject)) {
+            return $this->subject->{$name}(...$arguments);
+        }
+
+        // Subject is a class name.
+        if (is_string($this->subject)) {
+            return $this->subject::{$name}(...$arguments);
+        }
+
+        throw new \InvalidArgumentException('Subject passed to regulator should be an object or class name.');
     }
 }
